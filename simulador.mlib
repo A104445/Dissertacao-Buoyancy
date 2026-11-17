@@ -1,0 +1,61 @@
+<materialLib name="OceanLib"> 
+
+    <shaders>
+        <shader name="oceanShader" vs="shaders/ocean.vert" ps="shaders/ocean.frag" />
+    </shaders>
+
+    <materials>
+        <material name="MatOceano">
+            <shader name="oceanShader">
+                <values>
+                    <valueof uniform="m_pvm"          type="RENDERER" context="CURRENT" component="PROJECTION_VIEW_MODEL" />
+                    <valueof uniform="camPos"         type="CAMERA" context="CURRENT" component="POSITION" />
+                    <valueof uniform="time"           type="RENDERER" context="CURRENT" component="TIMER" />
+                    
+                    <valueof uniform="sea_state"      type="RENDERER" component="sea_state"/>
+                    <valueof uniform="wave_dirX"      type="RENDERER" component="wave_dirX"/>
+                    <valueof uniform="wave_dirZ"      type="RENDERER" component="wave_dirZ"/>
+                    <valueof uniform="wave_steep"     type="RENDERER" component="wave_steep"/>
+                    <valueof uniform="wave_amp"       type="RENDERER" component="wave_amp"/>
+                    <valueof uniform="wave_length"    type="RENDERER" component="wave_length"/>
+                    <valueof uniform="wave_speed"     type="RENDERER" component="wave_speed"/>
+                </values>
+            </shader>
+        </material>
+        <!-- Cores Vibrantes da Ilha -->
+        <material name="MatAreia">
+            <color>
+                <AMBIENT r="0.6" g="0.5" b="0.3" a="1.0" />
+                <DIFFUSE r="0.9" g="0.8" b="0.5" a="1.0" />
+                <SPECULAR r="0.1" g="0.1" b="0.1" a="1.0" />
+                <SHININESS value="10" />
+            </color>
+        </material>
+        <material name="MatTronco">
+            <color>
+                <AMBIENT r="0.3" g="0.15" b="0.05" a="1.0" />
+                <DIFFUSE r="0.45" g="0.25" b="0.1" a="1.0" />
+                <SPECULAR r="0.0" g="0.0" b="0.0" a="1.0" />
+                <SHININESS value="1" />
+            </color>
+        </material>
+        <material name="MatFolhas">
+            <color>
+                <AMBIENT r="0.1" g="0.4" b="0.1" a="1.0" />
+                <DIFFUSE r="0.2" g="0.8" b="0.2" a="1.0" />
+                <SPECULAR r="0.2" g="0.4" b="0.2" a="1.0" />
+                <SHININESS value="25" /> <!-- Dá aquele brilho molhado e tropical às folhas -->
+            </color>
+        </material>
+        <!-- Material das Pedras/Rochedos -->
+        <material name="MatPedra">
+            <color>
+                <AMBIENT r="0.2" g="0.2" b="0.22" a="1.0" />
+                <DIFFUSE r="0.4" g="0.4" b="0.45" a="1.0" />
+                <SPECULAR r="0.1" g="0.1" b="0.1" a="1.0" />
+                <SHININESS value="5" />
+            </color>
+        </material>
+    </materials>
+
+</materialLib>

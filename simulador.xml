@@ -1,0 +1,194 @@
+<?xml version="1.0" ?>
+<project name="Simulador de Mar - Base" width="1280" height="720">
+    <assets>
+        <attributes>
+            <!-- Variável do Dropdown (FLOAT para evitar crash do Nau) -->
+            <attribute name="sea_state"   type="RENDERER" data="INT" value="1" />
+            
+            <!-- Variáveis da Onda de Gerstner -->
+            <attribute name="wave_dirX"   type="RENDERER" data="FLOAT" value="1.0" />
+            <attribute name="wave_dirZ"   type="RENDERER" data="FLOAT" value="0.0" />
+            <attribute name="wave_steep"  type="RENDERER" data="FLOAT" value="0.65" />
+            <attribute name="wave_amp"    type="RENDERER" data="FLOAT" value="2.5" />
+            <attribute name="wave_length" type="RENDERER" data="FLOAT" value="80.0" />
+            <attribute name="wave_speed"  type="RENDERER" data="FLOAT" value="1.15" />
+        </attributes>
+
+        <scenes>
+            <scene name="OceanScene">
+                <geometry name="WaterMesh" type="GRID" LENGTH="500" DIVISIONS="500" material="MatAgua"/>
+            </scene>
+
+            <!-- === A GRANDE COSTA (+7 metros acima) === -->
+            <scene name="IlhaCentro">
+                <TRANSLATE x="60.0" y="4.0" z="-60.0" />
+                <SCALE x="45.0" y="6.0" z="45.0" />
+                <geometry name="GeoCentro" type="SPHERE" material="MatAreia" />
+            </scene>
+            <scene name="IlhaEsq">
+                <TRANSLATE x="30.0" y="3.0" z="-45.0" />
+                <SCALE x="35.0" y="5.0" z="20.0" />
+                <geometry name="GeoEsq" type="SPHERE" material="MatAreia" />
+            </scene>
+            <scene name="IlhaDir">
+                <TRANSLATE x="75.0" y="3.0" z="-20.0" />
+                <SCALE x="20.0" y="5.0" z="35.0" />
+                <geometry name="GeoDir" type="SPHERE" material="MatAreia" />
+            </scene>
+
+            <!-- === ROCHEDOS NA PONTA ESQUERDA === -->
+            <scene name="Pedra1">
+                <TRANSLATE x="15.0" y="7.0" z="-40.0" />
+                <SCALE x="5.0" y="10.0" z="6.0" />
+                <geometry name="GeoP1" type="BOX" material="MatPedra" />
+            </scene>
+            <scene name="Pedra2">
+                <TRANSLATE x="22.0" y="5.0" z="-38.0" />
+                <SCALE x="8.0" y="5.0" z="8.0" />
+                <geometry name="GeoP2" type="BOX" material="MatPedra" />
+            </scene>
+            <scene name="Pedra3">
+                <TRANSLATE x="18.0" y="6.0" z="-46.0" />
+                <SCALE x="4.0" y="7.0" z="4.0" />
+                <geometry name="GeoP3" type="BOX" material="MatPedra" />
+            </scene>
+
+            <!-- === ÁRVORE 1 (Gigante no centro da ilha) === -->
+            <scene name="T1_Base">
+                <TRANSLATE x="60.0" y="9.0" z="-60.0" />
+                <SCALE x="1.0" y="8.0" z="1.0" />
+                <geometry name="GeoT1B" type="BOX" material="MatTronco" />
+            </scene>
+            <scene name="T1_CopaA">
+                <TRANSLATE x="60.0" y="17.0" z="-60.0" />
+                <SCALE x="6.0" y="4.0" z="6.0" />
+                <geometry name="GeoT1CA" type="SPHERE" material="MatFolhas" />
+            </scene>
+            <scene name="T1_CopaB">
+                <TRANSLATE x="56.0" y="15.0" z="-57.0" />
+                <SCALE x="4.0" y="3.0" z="4.0" />
+                <geometry name="GeoT1CB" type="SPHERE" material="MatFolhas" />
+            </scene>
+            <scene name="T1_CopaC">
+                <TRANSLATE x="64.0" y="15.0" z="-63.0" />
+                <SCALE x="4.0" y="3.0" z="4.0" />
+                <geometry name="GeoT1CC" type="SPHERE" material="MatFolhas" />
+            </scene>
+
+            <!-- === ÁRVORE 2 (Média na península direita) === -->
+            <scene name="T2_Base">
+                <TRANSLATE x="75.0" y="7.0" z="-30.0" />
+                <SCALE x="0.6" y="5.0" z="0.6" />
+                <geometry name="GeoT2B" type="BOX" material="MatTronco" />
+            </scene>
+            <scene name="T2_Copa">
+                <TRANSLATE x="75.0" y="12.0" z="-30.0" />
+                <SCALE x="4.0" y="3.0" z="4.0" />
+                <geometry name="GeoT2C" type="SPHERE" material="MatFolhas" />
+            </scene>
+
+            <!-- === ÁRVORE 3 (Pequena junto aos rochedos) === -->
+            <scene name="T3_Base">
+                <TRANSLATE x="35.0" y="6.0" z="-45.0" />
+                <SCALE x="0.4" y="4.0" z="0.4" />
+                <geometry name="GeoT3B" type="BOX" material="MatTronco" />
+            </scene>
+            <scene name="T3_Copa">
+                <TRANSLATE x="35.0" y="10.0" z="-45.0" />
+                <SCALE x="2.5" y="2.0" z="2.5" />
+                <geometry name="GeoT3C" type="SPHERE" material="MatFolhas" />
+            </scene>
+        </scenes>
+
+        <viewports>
+            <viewport name="MainViewport">
+                <CLEAR_COLOR r="0.5" g="0.7" b="0.9" />
+            </viewport>
+        </viewports>
+        
+        <cameras>
+            <camera name="MainCamera">
+                <viewport name="MainViewport" />
+                <POSITION x="0" y="50" z="25" />
+                <LOOK_AT_POINT x="0" y="0" z="0" />
+                <NEAR value="0.1" />
+                <FAR value="1000.0" />
+            </camera>
+        </cameras>
+        
+        <lights>
+            <light name="Sun">
+                <DIRECTION x="0.5" y="-0.8" z="0.5" />
+            </light>
+        </lights>
+        
+        <materialLibs>
+            <materialLib filename="simulador.mlib"/>
+        </materialLibs>
+    </assets>
+
+    <pipelines>
+        <pipeline name="OceanPipeline">
+            <pass class="default" name="passPrincipal">
+                <scenes>
+                    <scene name="OceanScene" />
+                    
+                    <!-- Ilha -->
+                    <scene name="IlhaCentro" />
+                    <scene name="IlhaEsq" />
+                    <scene name="IlhaDir" />
+                    
+                    <!-- Rochedos -->
+                    <scene name="Pedra1" />
+                    <scene name="Pedra2" />
+                    <scene name="Pedra3" />
+                    
+                    <!-- Floresta -->
+                    <scene name="T1_Base" />
+                    <scene name="T1_CopaA" />
+                    <scene name="T1_CopaB" />
+                    <scene name="T1_CopaC" />
+                    <scene name="T2_Base" />
+                    <scene name="T2_Copa" />
+                    <scene name="T3_Base" />
+                    <scene name="T3_Copa" />
+                </scenes>
+                <camera name="MainCamera" />
+                <lights>
+                    <light name="Sun" />
+                </lights>
+                
+                <materialMaps>
+                    <!-- Proteger as cores da ilha -->
+                    <map fromMaterial="MatAreia" toLibrary="OceanLib" toMaterial="MatAreia" />
+                    <map fromMaterial="MatTronco" toLibrary="OceanLib" toMaterial="MatTronco" />
+                    <map fromMaterial="MatFolhas" toLibrary="OceanLib" toMaterial="MatFolhas" />
+                    <map fromMaterial="MatPedra" toLibrary="OceanLib" toMaterial="MatPedra" />
+                    
+                    <!-- Aplicar o Shader apenas ao Mar -->
+                    <map fromMaterial="MatAgua" toLibrary="OceanLib" toMaterial="MatOceano">
+                        <state name="sea_state" value="1" />
+                        <state name="wave_dirX" value="1.0" />
+                        <state name="wave_dirZ" value="0.0" />
+                        <state name="wave_amp" value="2.5" />
+                        <state name="wave_length" value="80.0" />
+                        <state name="wave_steep" value="0.65" />
+                        <state name="wave_speed" value="1.15" />
+                    </map>
+                </materialMaps>
+            </pass>
+        </pipeline>
+    </pipelines>
+
+    <interface>
+        <window label="Simulador Hidrodinâmico">
+            <var label="Estado do Mar" type="RENDERER" context="CURRENT" component="sea_state" strings="0 - Calmo, 1 - Agitado, 2 - Tempestade, 3 - Manual" def="1"/>
+            <var label="Vento Dir X" type="RENDERER" context="CURRENT" component="wave_dirX" def="min=-1.0 max=1.0 step=0.1"/>
+            <var label="Vento Dir Z" type="RENDERER" context="CURRENT" component="wave_dirZ" def="min=-1.0 max=1.0 step=0.1"/>
+            <var label="Amplitude (Manual)" type="RENDERER" context="CURRENT" component="wave_amp" def="min=0.0 max=15.0 step=0.1"/>
+            <var label="Comprimento (Manual)" type="RENDERER" context="CURRENT" component="wave_length" def="min=5.0 max=300.0 step=1.0"/>
+            <var label="Steepness (Manual)" type="RENDERER" context="CURRENT" component="wave_steep" def="min=0.0 max=1.0 step=0.05"/>
+            <var label="Velocidade (Manual)" type="RENDERER" context="CURRENT" component="wave_speed" def="min=0.0 max=3.0 step=0.1"/>
+        </window>
+    </interface>
+</project>
